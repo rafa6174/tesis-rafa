@@ -19,11 +19,26 @@ datos<-cbind(G1,G2)
 datos<-t(datos)
 datos<-as.data.frame(datos)
 colnames(datos)<-c("Var1","Var2","Grupo")
-datos$grupo<-as.factor(datos$grupo)
+datos$Grupo<-as.factor(datos$Grupo)
+
+datos
+
+mu1<-rbind(mean(G1[1,]),mean(G1[2,]))
+mu2<-rbind(mean(G2[1,]),mean(G2[2,]))
+
+sigma1<-matrix(c(cov(G1[1,],G1[1,]),cov(G1[1,],G1[2,]),cov(G1[2,],G1[1,]),cov(G1[2,],G1[2,])),ncol = 2)
+sigma2<-matrix(c(cov(G2[1,],G2[1,]),cov(G2[1,],G2[2,]),cov(G2[2,],G2[1,]),cov(G2[2,],G2[2,])),ncol = 2)
+sigma=(sigma1+sigma2)/2
+Sinv<-solve(sigma)
+b<-Sinv*(mu1-mu2)
+mu1<-as.matrix(mu1)
+mu2<-as.matrix(mu2)
+b<-Sinv%*%(mu1-mu2)
+muc<-(mu1+mu2)/2
 
 datos |>
   ggplot()+
   geom_blank()+
   geom_point(aes(x =Var1, y =Var2,
                  shape = Grupo, color = Grupo, fill =Grupo))+
-  geom_abline(slope =-1.1882597, intercept = 3.2, color = "blue", linewidth = 1)
+  geom_abline(slope =-0.9159786, intercept = 4.149884, color = "blue", linewidth = 1)
