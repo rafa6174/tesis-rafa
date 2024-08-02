@@ -52,6 +52,7 @@ datos |>
   geom_point(aes(x =Var1, y =Var2,
                  shape = Grupo, color = Grupo, fill =Grupo))+
   geom_point(data = punto, aes(x = Var1, y = Var2), shape = 18, size = 4, color = "purple")+
-  geom_circle(data = datos_circulo, aes(x0 = 2, y0 = 2, r = 1))
+  geom_circle(data = datos_circulo, aes(x0 = 2, y0 = 2, r = 1))+
+  coord_fixed()
   
   
