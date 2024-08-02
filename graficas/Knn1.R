@@ -1,8 +1,9 @@
 library(tidyverse)
+library(ggforce)
 
-set.seed(2)
+set.seed(1)
 x<-rnorm(50,1/2,1)
-set.seed(3)
+set.seed(2)
 y<-rnorm(50,1/2,1)
 
 G1<-rbind(x,y)
@@ -10,7 +11,7 @@ G1<-rbind(G1,rep(1,50))
 
 set.seed(15)
 x<-rnorm(55,3.5,1)
-set.seed(16)
+set.seed(14)
 y<-rnorm(55,3,1)
 
 G2<-rbind(x,y)
@@ -36,9 +37,21 @@ mu2<-as.matrix(mu2)
 b<-Sinv%*%(mu1-mu2)
 muc<-(mu1+mu2)/2
 
+datos_circulo <- data.frame(
+  Var1 = 2,
+  Var2 = 2,
+  r = 0.5
+)
+
+punto<-data.frame(Var1=2,Var2=2)
+radio<-0.5
+
 datos |>
   ggplot()+
   geom_blank()+
   geom_point(aes(x =Var1, y =Var2,
                  shape = Grupo, color = Grupo, fill =Grupo))+
-  geom_abline(slope =-0.9159786, intercept = 4.149884, color = "blue", linewidth = 1)
+  geom_point(data = punto, aes(x = Var1, y = Var2), shape = 18, size = 4, color = "purple")+
+  geom_circle(data = datos_circulo, aes(x0 = 2, y0 = 2, r = 1))
+  
+  
